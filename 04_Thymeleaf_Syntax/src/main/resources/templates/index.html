@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+  <!--/* Link URL Expression : @{} */-->
+  <img th:src="@{/static/images/rainy.jpeg}" width="100px"><br><br>
+  <a th:href="@{/value/expr}">Value Expression</a>
+  <a th:href="@{/utility}">Utility</a>
+  <a th:href="@{/message/expr}">Message Expression</a>
+  <a th:href="@{/javascript}">with javascript</a>
+  <a th:href="@{/frag/expr}">Fragment Expression</a>
+  <a th:href="@{/control}">Controller Statement</a>
+  
+</body>
+</html>
