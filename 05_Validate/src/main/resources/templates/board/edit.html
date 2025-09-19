@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+  <h1 th:text="|${board.bid}번 게시글|"></h1>
+ <div th:text="${board.createdAt} != null ? ${#temporals.format(board.createdAt, 'yyyy.MM.dd a hh:mm:ss')} : '작성일자 없음'"></div>
+<form th:action="@{/board/update}" method="post">
+    <!-- 게시글 ID는 hidden으로 전송 -->
+    <input type="hidden" name="bid" th:value="${board.bid}" />
+    
+    <div>
+      <label for="title">제목 :</label>
+      <input type="text" id="title" name="title" th:value="${board.title}" required />
+      <th:block th:if="${errors != null and errors.hasFieldErrors('title')}">
+			    <span style="font-size: 0.9em; color: red;" th:text="${errors.getFieldError('title').defaultMessage}"></span>
+			</th:block>
+    <br>
+    </div>
+    
+    <div>
+      <label for="content">내용 :</label>
+      <textarea id="content" name="content" rows="10" cols="50" required th:text="${board.content}"></textarea>
+	       <th:block th:if="${errors != null and errors.hasFieldErrors('content')}">
+	      <span style="font-size: 0.9em; color: red;" th:text="${errors.getFieldError('content').defaultMessage}"></span>
+	    </th:block>
+    </div>
+    
+    <button type="submit">수정 완료</button>
+  </form>
+ 
+ 
+
+</body>
+</html>

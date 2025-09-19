@@ -26,6 +26,7 @@
 								  title,
 								  content,
 								  created_at
+								  
 								) VALUES (
 								  #{title},
 								  #{content},
