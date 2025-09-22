@@ -11,7 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ErrorResponseDTO {
+public class ApiUserErrorResponseDTO {
 	private String errorCode;
-	private String errorMessage;
+	private String errorMessage; // 필수 값 누락
+	private String errorDetailMessage; // 아이디는 필수 입니다.
 }
