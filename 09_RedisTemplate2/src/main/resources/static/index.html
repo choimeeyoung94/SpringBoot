@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  <h1>글 작성</h1>
+  <div>
+    <input type="number" name="bid" id="bid"  placeholder="bid를 입력하세요"/>
+    <input type="text" name="title" id="title" placeholder="제목을 입력하세요"/>
+    <input type="text" name="content" id="content" placeholder="내용을 입력하세요"/>
+    <button onclick="saveBoard()">글 저장</button>
+    <button onclick="getBoard()">글 조회</button>
+    <button onclick="deleteBoard()">글 삭제</button>
+  </div>
+  <div id="result"></div>
+<script>
+    function saveBoard() {
+      const bid = document.getElementById('bid').value;
+      const title = document.getElementById('title').value;
+      const content = document.getElementById('content').value;
+      
+      fetch('/api/boards', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          bid:bid,
+          title: title,
+          content: content
+        })
+      })
+      .then(res => res.text())
+      .then(msg => alert(msg))
+      .catch(err => document.getElementById('result').innerText = err);
+
+    }
+
+    function getBoard() { // 함수명 getBoard
+      const bid = document.getElementById('bid').value;
+      fetch('/api/boards/' + bid)
+      .then(res => {
+        if (!res.ok) throw new Error("조회 실패");
+        return res.json();
+      })
+      .then(data => {
+         document.getElementById('result').innerHTML = `
+          <p><strong>bid:</strong> ${data.bid}</p>
+                <p><strong>제목:</strong> ${data.title}</p>
+                <p><strong>내용:</strong> ${data.content}</p>
+                <p><strong>작성일:</strong> ${data.createdAt}</p>
+         `;
+      })
+      .catch(err => document.getElementById('result').innerText = "조회 실패: " + err);
+    }
+    
+    function deleteBoard() {
+      const bid = document.getElementById('bid').value;
+      fetch('/api/boards/' + bid, {
+        method: "DELETE"
+      })
+      .then(res => res.text())
+      .then(msg => alert(msg))
+      .catch(err => alert("삭제 실패" + err));
+    }
+    
+    
+    
+    
+</script>
+</body>
+</html>
